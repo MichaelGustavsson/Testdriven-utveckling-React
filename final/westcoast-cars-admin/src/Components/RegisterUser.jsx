@@ -24,7 +24,7 @@ const RegisterUser = () => {
         placeholder='Confirm Password'
         type='password'
       />
-      <button>Register user</button>
+      <button disabled>Register User</button>
     </div>
   );
 };

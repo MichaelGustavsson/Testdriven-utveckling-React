@@ -75,5 +75,18 @@ describe('Register User Component', () => {
       // Assert...
       expect(registerButton).toBeInTheDocument();
     });
+
+    test('register user button should be disabled initially', () => {
+      // Arrange...
+      render(<RegisterUser />);
+      const registerButton = screen.getByRole('button', {
+        name: 'Register User',
+      });
+
+      // Act...
+
+      // Assert...
+      expect(registerButton).toBeDisabled();
+    });
   });
 });

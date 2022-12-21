@@ -9,7 +9,10 @@ const UserList = () => {
       .then((data) => setUsers(data));
   }, []);
   return (
-    <section className='container'>
+    <section
+      data-testid='user-list-component'
+      className='container'
+    >
       <h1 className='page-title'>Users</h1>
       <ul>
         {users.map((user) => (

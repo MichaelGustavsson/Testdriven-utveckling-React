@@ -18,7 +18,10 @@ const RegisterUser = () => {
   };
 
   return (
-    <section className='container'>
+    <section
+      data-testid='add-user-component'
+      className='container'
+    >
       <h1 className='page-title'>Användar registrering</h1>
       <form>
         <div className='form-control'>

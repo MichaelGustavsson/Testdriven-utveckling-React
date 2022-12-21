@@ -10,7 +10,10 @@ const VehicleList = () => {
   }, []);
 
   return (
-    <section className='container'>
+    <section
+      data-testid='vehicle-list-component'
+      className='container'
+    >
       <h1 className='page-title'>Vehicles in storage</h1>
       <ul>
         {vehicles.map((vehicle) => (

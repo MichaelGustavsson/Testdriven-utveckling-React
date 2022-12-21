@@ -1,12 +1,16 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import RegisterUser from './RegisterUser';
 
 describe('Register User Component', () => {
+  const setup = () => render(<RegisterUser />);
+
   describe('Register User Page', () => {
-    test('has a title text saying Register User', () => {
+    test('has a title text saying "Användar registrering"', () => {
       // Arrange...
-      render(<RegisterUser />);
+      // render(<RegisterUser />);
+      setup();
       const titleText = screen.getByRole('heading', {
         name: 'Användar registrering',
       });
@@ -87,6 +91,24 @@ describe('Register User Component', () => {
 
       // Assert...
       expect(registerButton).toBeDisabled();
+    });
+  });
+  describe('Form interactions', () => {
+    test('register button should be enabled when password and confirm password are the same', () => {
+      // Arrange...
+      setup();
+      const passwordInput = screen.getByLabelText('Password');
+      const confirmPasswordInput = screen.getByLabelText('Confirm Password');
+      const registerButton = screen.getByRole('button', {
+        name: 'Register User',
+      });
+
+      // Act...
+      userEvent.type(passwordInput, 'Pa$$w0rd');
+      userEvent.type(confirmPasswordInput, 'Pa$$w0rd');
+
+      // Assert...
+      expect(registerButton).toBeEnabled();
     });
   });
 });

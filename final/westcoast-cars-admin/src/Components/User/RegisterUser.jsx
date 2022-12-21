@@ -1,4 +1,22 @@
+import { useState } from 'react';
+
 const RegisterUser = () => {
+  const [buttonDisable, setButtonDisabled] = useState(true);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const onChangePasswordHandler = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setButtonDisabled(value !== confirmPassword);
+  };
+
+  const onChangeConfirmPasswordHandler = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    setButtonDisabled(value !== password);
+  };
+
   return (
     <section className='container'>
       <h1 className='page-title'>Användar registrering</h1>
@@ -23,6 +41,8 @@ const RegisterUser = () => {
             id='password'
             placeholder='Password'
             type='password'
+            value={password}
+            onChange={onChangePasswordHandler}
           />
         </div>
         <div className='form-control'>
@@ -31,12 +51,14 @@ const RegisterUser = () => {
             id='confirmpassword'
             placeholder='Confirm Password'
             type='password'
+            value={confirmPassword}
+            onChange={onChangeConfirmPasswordHandler}
           />
         </div>
         <div className='form-control'>
           <button
             className='btn btn-primary'
-            disabled
+            disabled={buttonDisable}
           >
             Register User
           </button>

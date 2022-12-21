@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import UserLogin from './UserLogin';
 
 describe('User Login Page', () => {
+  const setup = () => render(<UserLogin />);
+
   test('should have a username input', () => {
     // Arrange...
     render(<UserLogin />);
@@ -41,5 +44,23 @@ describe('User Login Page', () => {
 
     // Assert...
     expect(loginButton).toBeDisabled();
+  });
+
+  describe('Form interactions', () => {
+    test('login button should be enabled when username and password have values', () => {
+      // Arrange
+      setup();
+
+      const usernameInput = screen.getByLabelText('Username/Email');
+      const password = screen.getByLabelText('Password');
+
+      // Act
+      userEvent.type(usernameInput, 'Michael');
+      userEvent.type(password, 'Pa$$w0rd');
+      const loginButton = screen.getByRole('button');
+
+      // Assert
+      expect(loginButton).toBeEnabled();
+    });
   });
 });

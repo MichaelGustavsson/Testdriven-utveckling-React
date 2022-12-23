@@ -19,13 +19,26 @@ const RegisterUser = () => {
     setButtonDisabled(value !== password);
   };
 
+  const onSave = (e) => {
+    e.preventDefault();
+    const body = { userName, email };
+
+    fetch('http://localhost:3010/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  };
+
   return (
     <section
       data-testid='add-user-component'
       className='container'
     >
       <h1 className='page-title'>Användar registrering</h1>
-      <form>
+      <form onSubmit={onSave}>
         <div className='form-control'>
           <label htmlFor='username'>User Name</label>
           <input

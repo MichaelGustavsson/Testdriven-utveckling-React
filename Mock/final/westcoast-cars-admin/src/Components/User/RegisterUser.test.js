@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { setupServer } from 'msw/node';
+import { rest } from 'msw';
 
 import RegisterUser from './RegisterUser';
 
@@ -109,6 +111,47 @@ describe('Register User Component', () => {
 
       // Assert...
       expect(registerButton).toBeEnabled();
+    });
+
+    test('saves the user when "Register User" is clicked', async () => {
+      // Arrange...
+      let requestBody;
+
+      // Configure MSW server...
+      // Create an endpoint for hijacking post request...
+      const server = setupServer(
+        rest.post('http://localhost:3010/users', (req, res, context) => {
+          req.json().then((data) => (requestBody = data));
+          return res(context.status(201));
+        }),
+      );
+
+      // Start listening
+      server.listen();
+
+      setup();
+      const userNameInput = screen.getByLabelText('User Name');
+      const emailInput = screen.getByLabelText('email', { exact: false });
+      const passwordInput = screen.getByLabelText('Password');
+      const confirmPasswordInput = screen.getByLabelText('Confirm Password');
+      const registerButton = screen.getByRole('button', {
+        name: 'Register User',
+      });
+
+      // Act...
+      await userEvent.type(userNameInput, 'MalinGustavsson');
+      await userEvent.type(emailInput, 'malin@gmail.com');
+      await userEvent.type(passwordInput, 'Pa$$w0rd');
+      await userEvent.type(confirmPasswordInput, 'Pa$$w0rd');
+
+      await userEvent.click(registerButton);
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Assert...
+      expect(requestBody).toEqual({
+        userName: 'MalinGustavsson',
+        email: 'malin@gmail.com',
+      });
     });
   });
 });

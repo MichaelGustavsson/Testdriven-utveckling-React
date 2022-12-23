@@ -51,8 +51,18 @@
     },
     {
       "id": 2,
-      "firstName": "AnnikaGustavsson",
+      "userName": "AnnikaGustavsson",
       "email": "annika@gmail.com"
+    },
+    {
+      "userName": "EmmaGustavsson",
+      "email": "emma@gmail.com",
+      "id": 3
+    },
+    {
+      "userName": "MalinGustavsson",
+      "email": "malin@gmail.com",
+      "id": 4
     }
   ]
 }

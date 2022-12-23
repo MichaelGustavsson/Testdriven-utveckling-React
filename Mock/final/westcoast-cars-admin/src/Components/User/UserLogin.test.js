@@ -47,7 +47,7 @@ describe('User Login Page', () => {
   });
 
   describe('Form interactions', () => {
-    test('login button should be enabled when username and password have values', () => {
+    test('login button should be enabled when username and password have values', async () => {
       // Arrange
       setup();
 
@@ -55,8 +55,8 @@ describe('User Login Page', () => {
       const password = screen.getByLabelText('Password');
 
       // Act
-      userEvent.type(usernameInput, 'Michael');
-      userEvent.type(password, 'Pa$$w0rd');
+      await userEvent.type(usernameInput, 'Michael');
+      await userEvent.type(password, 'Pa$$w0rd');
       const loginButton = screen.getByRole('button');
 
       // Assert
